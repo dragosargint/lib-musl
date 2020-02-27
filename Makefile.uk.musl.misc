@@ -34,5 +34,5 @@ LIBMUSL_SRCS-y += $(LIBMUSL)/src/misc/setdomainname.c
 LIBMUSL_SRCS-y += $(LIBMUSL)/src/misc/setrlimit.c
 #LIBMUSL_SRCS-y += $(LIBMUSL)/src/misc/syscall.c|misc
 LIBMUSL_SRCS-y += $(LIBMUSL)/src/misc/syslog.c
-LIBMUSL_SRCS-y += $(LIBMUSL)/src/misc/uname.c
+#LIBMUSL_SRCS-y += $(LIBMUSL)/src/misc/uname.c
 LIBMUSL_SRCS-y += $(LIBMUSL)/src/misc/wordexp.c
