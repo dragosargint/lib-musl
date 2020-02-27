@@ -7,3 +7,4 @@ menuconfig LIBMUSL
         select LIBSYSCALL_SHIM
         select LIBVFSCORE
         select LIBPOSIX_PROCESS
+        select LIBPOSIX_SYSINFO
