@@ -29,7 +29,7 @@ LIBMUSL_INTERNAL_SRCS-y += $(LIBMUSL)/src/internal/version.c
 #else ifeq (x86_32,$(CONFIG_UK_ARCH))
 #LIBMUSL_INTERNAL_SRCS-y += $(LIBMUSL)/src/internal/i386/syscall.s|i386
 #else ifeq (x86_64,$(CONFIG_UK_ARCH))
-#LIBMUSL_INTERNAL_SRCS-y += $(LIBMUSL)/src/internal/x86_64/syscall.s|x86_64
+LIBMUSL_INTERNAL_SRCS-y += $(LIBMUSL)/src/internal/x86_64/syscall.s|x86_64
 #endif
 
 #LIBMUSL_INTERNAL_SRCS-y += $(LIBMUSL)/src/internal/aarch64/syscall.s

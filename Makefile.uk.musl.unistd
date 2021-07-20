@@ -91,7 +91,7 @@ LIBMUSL_UNISTD_SRCS-y += $(LIBMUSL)/src/unistd/setuid.c
 #LIBMUSL_UNISTD_SRCS-y += $(LIBMUSL)/src/unistd/setsid.c
 LIBMUSL_UNISTD_SRCS-y += $(LIBMUSL)/src/unistd/setxid.c
 endif
-#LIBMUSL_UNISTD_SRCS-y += $(LIBMUSL)/src/unistd/sleep.c
+LIBMUSL_UNISTD_SRCS-y += $(LIBMUSL)/src/unistd/sleep.c
 #LIBMUSL_UNISTD_SRCS-y += $(LIBMUSL)/src/unistd/symlink.c
 LIBMUSL_UNISTD_SRCS-y += $(LIBMUSL)/src/unistd/symlinkat.c
 #LIBMUSL_UNISTD_SRCS-y += $(LIBMUSL)/src/unistd/sync.c
