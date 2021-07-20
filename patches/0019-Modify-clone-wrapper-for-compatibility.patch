@@ -1,0 +1,41 @@
+From a97aec8f3a6c11a9faf686ddea2d3c30f70849e0 Mon Sep 17 00:00:00 2001
+From: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+Date: Mon, 19 Jul 2021 14:15:32 +0300
+Subject: [PATCH] Modify-clone-wrapper-for-compatibility
+
+Signed-off-by: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+---
+ src/thread/x86_64/clone.s | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/src/thread/x86_64/clone.s b/src/thread/x86_64/clone.s
+index ee59903..0460449 100644
+--- a/src/thread/x86_64/clone.s
++++ b/src/thread/x86_64/clone.s
+@@ -11,17 +11,19 @@ __clone:
+ 	mov 8(%rsp),%r10
+ 	mov %r11,%r9
+ 	and $-16,%rsi
+-	sub $8,%rsi
+-	mov %rcx,(%rsi)
++	sub $16,%rsi
++	mov %rcx,8(%rsi)
++	mov %r9,0(%rsi)
+ 	syscall
+ 	test %eax,%eax
+ 	jnz 1f
+ 	xor %ebp,%ebp
++	pop %r9
+ 	pop %rdi
+ 	call *%r9
+ 	mov %eax,%edi
+ 	xor %eax,%eax
+-	mov $60,%al
+-	syscall
++	/*mov $60,%al
++	syscall*/
+ 	hlt
+ 1:	ret
+-- 
+2.17.1
+

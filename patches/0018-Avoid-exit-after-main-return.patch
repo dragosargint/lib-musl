@@ -1,0 +1,25 @@
+From 58abe75d6eceaa2917d387ab764e3b4c5f6f6318 Mon Sep 17 00:00:00 2001
+From: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+Date: Mon, 19 Jul 2021 13:26:06 +0300
+Subject: [PATCH] Avoid-exit-after-main-return
+
+Signed-off-by: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+---
+ src/env/__libc_start_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/env/__libc_start_main.c b/src/env/__libc_start_main.c
+index 2d758af..dff6b26 100644
+--- a/src/env/__libc_start_main.c
++++ b/src/env/__libc_start_main.c
+@@ -71,6 +71,6 @@ int __libc_start_main(int (*main)(int,char **,char **), int argc, char **argv)
+ 	__libc_start_init();
+ 
+ 	/* Pass control to the application */
+-	exit(main(argc, argv, envp));
++	main(argc, argv, envp);
+ 	return 0;
+ }
+-- 
+2.17.1
+

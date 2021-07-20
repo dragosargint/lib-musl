@@ -1,0 +1,26 @@
+From d4c7e3ce955fa99c2fdf454c419799e604001b80 Mon Sep 17 00:00:00 2001
+From: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+Date: Mon, 19 Jul 2021 12:41:27 +0300
+Subject: [PATCH] Avoid-conflicting-types-for-sigaltstack
+
+Signed-off-by: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+---
+ include/signal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/signal.h b/include/signal.h
+index 2c8b3d5..66a27f4 100644
+--- a/include/signal.h
++++ b/include/signal.h
+@@ -222,7 +222,7 @@ void psignal(int, const char *);
+ 
+ #if defined(_XOPEN_SOURCE) || defined(_BSD_SOURCE) || defined(_GNU_SOURCE)
+ int killpg(pid_t, int);
+-int sigaltstack(const stack_t *__restrict, stack_t *__restrict);
++//int sigaltstack(const stack_t *__restrict, stack_t *__restrict);
+ int sighold(int);
+ int sigignore(int);
+ int siginterrupt(int, int);
+-- 
+2.17.1
+

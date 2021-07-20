@@ -1,0 +1,98 @@
+From cbe46caa7c553ab14bfe51209edc2a04bfc5133e Mon Sep 17 00:00:00 2001
+From: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+Date: Tue, 20 Jul 2021 15:04:41 +0300
+Subject: [PATCH] Call-sigaction-directly-from-Unikraft
+
+Signed-off-by: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+
+Call-sigaction-directly-from-Unikraft
+
+Signed-off-by: ARGINT DRAGOS IULIAN <dragosargint21@gmail.com>
+---
+ src/signal/sigaction.c | 65 +++++++++++++++++++++---------------------
+ 1 file changed, 33 insertions(+), 32 deletions(-)
+
+diff --git a/src/signal/sigaction.c b/src/signal/sigaction.c
+index 6eca06f..7d7e8ef 100644
+--- a/src/signal/sigaction.c
++++ b/src/signal/sigaction.c
+@@ -16,38 +16,39 @@ void __get_handler_set(sigset_t *set)
+ 
+ int __libc_sigaction(int sig, const struct sigaction *restrict sa, struct sigaction *restrict old)
+ {
+-	struct k_sigaction ksa, ksa_old;
+-	if (sa) {
+-		if ((uintptr_t)sa->sa_handler > 1UL) {
+-			a_or_l(handler_set+(sig-1)/(8*sizeof(long)),
+-				1UL<<(sig-1)%(8*sizeof(long)));
++	// struct k_sigaction ksa, ksa_old;
++	// if (sa) {
++	// 	if ((uintptr_t)sa->sa_handler > 1UL) {
++	// 		a_or_l(handler_set+(sig-1)/(8*sizeof(long)),
++	// 			1UL<<(sig-1)%(8*sizeof(long)));
+ 
+-			/* If pthread_create has not yet been called,
+-			 * implementation-internal signals might not
+-			 * yet have been unblocked. They must be
+-			 * unblocked before any signal handler is
+-			 * installed, so that an application cannot
+-			 * receive an illegal sigset_t (with them
+-			 * blocked) as part of the ucontext_t passed
+-			 * to the signal handler. */
+-			if (!libc.threaded && !unmask_done) {
+-				__syscall(SYS_rt_sigprocmask, SIG_UNBLOCK,
+-					SIGPT_SET, 0, _NSIG/8);
+-				unmask_done = 1;
+-			}
+-		}
+-		ksa.handler = sa->sa_handler;
+-		ksa.flags = sa->sa_flags | SA_RESTORER;
+-		ksa.restorer = (sa->sa_flags & SA_SIGINFO) ? __restore_rt : __restore;
+-		memcpy(&ksa.mask, &sa->sa_mask, sizeof ksa.mask);
+-	}
+-	if (syscall(SYS_rt_sigaction, sig, sa?&ksa:0, old?&ksa_old:0, sizeof ksa.mask))
+-		return -1;
+-	if (old) {
+-		old->sa_handler = ksa_old.handler;
+-		old->sa_flags = ksa_old.flags;
+-		memcpy(&old->sa_mask, &ksa_old.mask, sizeof ksa_old.mask);
+-	}
++	// 		/* If pthread_create has not yet been called,
++	// 		 * implementation-internal signals might not
++	// 		 * yet have been unblocked. They must be
++	// 		 * unblocked before any signal handler is
++	// 		 * installed, so that an application cannot
++	// 		 * receive an illegal sigset_t (with them
++	// 		 * blocked) as part of the ucontext_t passed
++	// 		 * to the signal handler. */
++	// 		if (!libc.threaded && !unmask_done) {
++	// 			__syscall(SYS_rt_sigprocmask, SIG_UNBLOCK,
++	// 				SIGPT_SET, 0, _NSIG/8);
++	// 			unmask_done = 1;
++	// 		}
++	// 	}
++	// 	ksa.handler = sa->sa_handler;
++	// 	ksa.flags = sa->sa_flags | SA_RESTORER;
++	// 	ksa.restorer = (sa->sa_flags & SA_SIGINFO) ? __restore_rt : __restore;
++	// 	memcpy(&ksa.mask, &sa->sa_mask, sizeof ksa.mask);
++	// }
++	// if (syscall(SYS_rt_sigaction, sig, sa?&ksa:0, old?&ksa_old:0, sizeof ksa.mask))
++	// 	return -1;
++	// if (old) {
++	// 	old->sa_handler = ksa_old.handler;
++	// 	old->sa_flags = ksa_old.flags;
++	// 	memcpy(&old->sa_mask, &ksa_old.mask, sizeof ksa_old.mask);
++	// }
++	sigaction(sig, sa, old);
+ 	return 0;
+ }
+ 
+@@ -60,4 +61,4 @@ int __sigaction(int sig, const struct sigaction *restrict sa, struct sigaction *
+ 	return __libc_sigaction(sig, sa, old);
+ }
+ 
+-weak_alias(__sigaction, sigaction);
++//weak_alias(__sigaction, sigaction);
+-- 
+2.17.1
+
