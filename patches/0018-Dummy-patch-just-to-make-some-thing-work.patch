@@ -1,0 +1,26 @@
+From 092b84c04b077d252077dfe7cf4a132de617e6df Mon Sep 17 00:00:00 2001
+From: Dragos Iulian Argint <dragosargint21@gmail.com>
+Date: Thu, 14 Jul 2022 22:55:38 +0300
+Subject: [PATCH] Dummy patch just to make some thing work
+
+Signed-off-by: Dragos Iulian Argint <dragosargint21@gmail.com>
+---
+ src/thread/pthread_create.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/thread/pthread_create.c b/src/thread/pthread_create.c
+index 11ee33f..936b1b6 100644
+--- a/src/thread/pthread_create.c
++++ b/src/thread/pthread_create.c
+@@ -191,7 +191,7 @@ int __pthread_create(pthread_t *restrict res, const pthread_attr_t *restrict att
+ 	unsigned char *map = 0, *stack = 0, *tsd = 0, *stack_limit;
+ 	unsigned flags = CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SIGHAND
+ 		| CLONE_THREAD | CLONE_SYSVSEM | CLONE_SETTLS
+-		| CLONE_PARENT_SETTID | CLONE_CHILD_CLEARTID | CLONE_DETACHED;
++		| CLONE_PARENT_SETTID;// | CLONE_CHILD_CLEARTID | CLONE_DETACHED;
+ 	int do_sched = 0;
+ 	pthread_attr_t attr = { 0 };
+ 
+-- 
+2.17.1
+
