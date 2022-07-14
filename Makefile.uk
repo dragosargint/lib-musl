@@ -33,6 +33,14 @@
 #
 
 ################################################################################
+# This will reserve space within `uk_tls` for the pthread structure in musl
+# Please refer to lib/uksched/Makefile.rules fore more details
+# For this musl version the size of "struct pthread" is 280
+################################################################################
+$(eval $(call uksched_tcb_reserve, 280))
+
+
+################################################################################
 # Library registration
 ################################################################################
 $(eval $(call addlib_s,libmusl,$(CONFIG_LIBMUSL)))
